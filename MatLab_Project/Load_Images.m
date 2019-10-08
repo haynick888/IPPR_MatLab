@@ -1,5 +1,9 @@
 %-----LOAD IMAGES FROM DATASET TO STRUCTURES-----%
 
+%training size
+batchesPerTest = 5;
+indexPerTest = 10; %change this up to 10,000 depending on size of your test
+
 %initialise variables
 trainingBatches = {load('dataset/data_batch_1.mat'), load('dataset/data_batch_2.mat'), load('dataset/data_batch_3.mat'), load('dataset/data_batch_4.mat'), load('dataset/data_batch_5.mat')};
 rgbChannels = {zeros(32, 32), zeros(32, 32), zeros(32, 32)};

@@ -25,11 +25,9 @@ Extract_Dataset
 %loads images from dataset into readable images with corresponding labels
 Load_Images
 
-% IMAGE EXAMPLE %
-trainingImageIndex = 101; % any number up to length of vehicleTrainingImagesWithLabels
-labelledImage = vehicleTrainingImagesWithLabels(trainingImageIndex).labelledImage;
-imshow(labelledImage.image);
-title(labelledImage.label);
+%creates a bag of features for each vehicle training image using the HOG
+%feature detector
+HOG_Bag_Of_Features
 
-    
-
+%run practice script
+Practice_Range

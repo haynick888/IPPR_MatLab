@@ -2,7 +2,8 @@
 
 %training size
 batchesPerTest = 5;
-indexPerTest = 10; %change this up to 10,000 depending on size of your test
+indexPerTest = 500; %change this up to 10,000 depending on size of your test
+numberOfTestImages = 200;
 
 %initialise variables
 trainingBatches = {load('dataset/data_batch_1.mat'), load('dataset/data_batch_2.mat'), load('dataset/data_batch_3.mat'), load('dataset/data_batch_4.mat'), load('dataset/data_batch_5.mat')};
@@ -11,6 +12,8 @@ testBatch = load('dataset/test_batch.mat');
 labelDictionary = load('dataset/batches.meta.mat');
 allTrainingImagesWithLabels = struct;
 vehicleTrainingImagesWithLabels = struct;
+allTestImagesWithLabels = struct;
+vehicleTestImagesWithLabels = struct;
 
 %convert dataset image file format to uint8 image format and add to
 %structure
@@ -33,13 +36,43 @@ for trainBatch=1:batchesPerTest
     end
 end
 
-%extract only images labelled as a vehicle type as we are only training and
-%testing with these
+%extract only images labelled as a vehicle type as we are only training with these
 counter = 0;
 for thisAnyImage=1:numel(allTrainingImagesWithLabels)
     currentLabel = allTrainingImagesWithLabels(thisAnyImage).labelledImage.label;
     if (currentLabel == "ship" || currentLabel == "automobile" || currentLabel == "truck" || currentLabel == "airplane")
         counter = counter+1;
         vehicleTrainingImagesWithLabels(counter).labelledImage = allTrainingImagesWithLabels(thisAnyImage).labelledImage;
+    end
+end
+
+%------------------------------------------------------------------------%
+%repeat for test images
+
+%convert dataset image file format to uint8 image format and add to
+%structure
+for imageIndex = 1:numberOfTestImages
+    for rgbChannel=1:3
+        for row=1:32
+            for col=1:32
+                rgbChannels{rgbChannel}(row,col)=testBatch.data(imageIndex,1024*(rgbChannel-1)+32*(row-1)+col);
+            end
+        end
+        rgbChannels{rgbChannel} = uint8(rgbChannels{rgbChannel});
+    end
+    currentImage(1).image = cat(3, rgbChannels{1}, rgbChannels{2}, rgbChannels{3});
+    currentImage(1).label = labelDictionary.label_names(trainingBatches{trainBatch}.labels(imageIndex)+1);
+    currentIndex = imageIndex;
+    %add label to each uint8 image
+    allTestImagesWithLabels(currentIndex).labelledImage = currentImage;
+end
+
+%extract only images labelled as a vehicle type as we are only training with these
+testCounter = 0;
+for thisAnyImage=1:numel(allTestImagesWithLabels)
+    currentLabel = allTestImagesWithLabels(thisAnyImage).labelledImage.label;
+    if (currentLabel == "ship" || currentLabel == "automobile" || currentLabel == "truck" || currentLabel == "airplane")
+        testCounter = testCounter+1;
+        vehicleTestImagesWithLabels(testCounter).labelledImage = allTestImagesWithLabels(thisAnyImage).labelledImage;
     end
 end

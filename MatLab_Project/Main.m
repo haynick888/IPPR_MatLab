@@ -29,8 +29,8 @@ Load_Images
 %feature detector
 HOG_Bag_Of_Features
 
-%run practice script
-Practice_Range
+%script used for practicing and testing ideas
+%Practice_Range
 
 %create and train bayes classifier
 Bayes_Classifier

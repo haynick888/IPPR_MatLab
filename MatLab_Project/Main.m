@@ -34,3 +34,6 @@ HOG_Bag_Of_Features
 
 %create and train bayes classifier
 Bayes_Classifier
+
+%provide evaluation test data
+Evaluation

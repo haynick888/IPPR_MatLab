@@ -31,3 +31,6 @@ HOG_Bag_Of_Features
 
 %run practice script
 Practice_Range
+
+%provide evaluation test data
+Evaluation

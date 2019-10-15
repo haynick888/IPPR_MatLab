@@ -19,6 +19,10 @@
 %=========================================================%
 %=========================================================%
 
+%training size
+numberOfTrainImages = 20; %WILL AUTOMATICALLY BE MULTIPLIED BY 5. change this up to 10,000 depending on size of your test
+numberOfTestImages = 10; %change this up to 10,000 depending on size of your test
+
 %extract dataset from .tar.gz file
 Extract_Dataset
 

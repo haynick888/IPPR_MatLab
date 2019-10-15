@@ -1,48 +1,40 @@
 %-----LOAD IMAGES FROM DATASET TO STRUCTURES-----%
 
-%training size
-batchesPerTest = 5;
-indexPerTest = 500; %change this up to 10,000 depending on size of your test
-numberOfTestImages = 200;
-
 %initialise variables
 trainingBatches = {load('dataset/data_batch_1.mat'), load('dataset/data_batch_2.mat'), load('dataset/data_batch_3.mat'), load('dataset/data_batch_4.mat'), load('dataset/data_batch_5.mat')};
 rgbChannels = {zeros(32, 32), zeros(32, 32), zeros(32, 32)};
 testBatch = load('dataset/test_batch.mat');
 labelDictionary = load('dataset/batches.meta.mat');
 allTrainingImagesWithLabels = struct;
-vehicleTrainingImagesWithLabels = struct;
 allTestImagesWithLabels = struct;
-vehicleTestImagesWithLabels = struct;
 
 %convert dataset image file format to uint8 image format and add to
 %structure
-for trainBatch=1:batchesPerTest
-    for imageIndex = 1:indexPerTest
-        %dataset has images sorted into 32*32 pixels * 3 colour channels
-        for rgbChannel=1:3
-            for row=1:32
-                for col=1:32
-                    rgbChannels{rgbChannel}(row,col)=trainingBatches{trainBatch}.data(imageIndex,1024*(rgbChannel-1)+32*(row-1)+col);
+trainCurrentIndex = 1;
+for trainBatch=1:5
+    trainImageIndex = 1;
+    indexPerTrain = numberOfTrainImages;
+    while trainImageIndex <= indexPerTrain
+        imageLabel = labelDictionary.label_names(trainingBatches{trainBatch}.labels(trainImageIndex)+1);
+        if (imageLabel == "ship" || imageLabel == "automobile" || imageLabel == "truck" || imageLabel == "airplane")
+            %dataset has images sorted into 32*32 pixels * 3 colour channels
+            for rgbChannel=1:3
+                for row=1:32
+                    for col=1:32
+                        rgbChannels{rgbChannel}(row,col)=trainingBatches{trainBatch}.data(trainImageIndex,1024*(rgbChannel-1)+32*(row-1)+col);
+                    end
                 end
+                rgbChannels{rgbChannel} = uint8(rgbChannels{rgbChannel});
             end
-            rgbChannels{rgbChannel} = uint8(rgbChannels{rgbChannel});
+            currentImage(1).image = cat(3, rgbChannels{1}, rgbChannels{2}, rgbChannels{3});
+            currentImage(1).label = imageLabel;
+            %add label to each uint8 image
+            allTrainingImagesWithLabels(trainCurrentIndex).labelledImage = currentImage;
+            trainCurrentIndex = trainCurrentIndex + 1;
+        else
+            indexPerTrain = indexPerTrain + 1;
         end
-        currentImage(1).image = cat(3, rgbChannels{1}, rgbChannels{2}, rgbChannels{3});
-        currentImage(1).label = labelDictionary.label_names(trainingBatches{trainBatch}.labels(imageIndex)+1);
-        currentIndex = imageIndex + (indexPerTest*(trainBatch-1));
-        %add label to each uint8 image
-        allTrainingImagesWithLabels(currentIndex).labelledImage = currentImage;
-    end
-end
-
-%extract only images labelled as a vehicle type as we are only training with these
-counter = 0;
-for thisAnyImage=1:numel(allTrainingImagesWithLabels)
-    currentLabel = allTrainingImagesWithLabels(thisAnyImage).labelledImage.label;
-    if (currentLabel == "ship" || currentLabel == "automobile" || currentLabel == "truck" || currentLabel == "airplane")
-        counter = counter+1;
-        vehicleTrainingImagesWithLabels(counter).labelledImage = allTrainingImagesWithLabels(thisAnyImage).labelledImage;
+        trainImageIndex = trainImageIndex + 1;
     end
 end
 
@@ -51,28 +43,43 @@ end
 
 %convert dataset image file format to uint8 image format and add to
 %structure
-for imageIndex = 1:numberOfTestImages
-    for rgbChannel=1:3
-        for row=1:32
-            for col=1:32
-                rgbChannels{rgbChannel}(row,col)=testBatch.data(imageIndex,1024*(rgbChannel-1)+32*(row-1)+col);
+testCurrentIndex = 1;
+testImageIndex = 1;
+while testImageIndex <= numberOfTestImages
+    imageLabel = labelDictionary.label_names(trainingBatches{trainBatch}.labels(testImageIndex)+1);
+    if (imageLabel == "ship" || imageLabel == "automobile" || imageLabel == "truck" || imageLabel == "airplane")
+        for rgbChannel=1:3
+            for row=1:32
+                for col=1:32
+                    rgbChannels{rgbChannel}(row,col)=testBatch.data(testImageIndex,1024*(rgbChannel-1)+32*(row-1)+col);
+                end
             end
+            rgbChannels{rgbChannel} = uint8(rgbChannels{rgbChannel});
         end
-        rgbChannels{rgbChannel} = uint8(rgbChannels{rgbChannel});
+        currentImage(1).image = cat(3, rgbChannels{1}, rgbChannels{2}, rgbChannels{3});
+        currentImage(1).label = imageLabel;
+        %add label to each uint8 image
+        allTestImagesWithLabels(testCurrentIndex).labelledImage = currentImage;
+        testCurrentIndex = testCurrentIndex + 1;
+    else
+        numberOfTestImages = numberOfTestImages + 1;
     end
-    currentImage(1).image = cat(3, rgbChannels{1}, rgbChannels{2}, rgbChannels{3});
-    currentImage(1).label = labelDictionary.label_names(trainingBatches{trainBatch}.labels(imageIndex)+1);
-    currentIndex = imageIndex;
-    %add label to each uint8 image
-    allTestImagesWithLabels(currentIndex).labelledImage = currentImage;
+    testImageIndex = testImageIndex + 1;
 end
 
-%extract only images labelled as a vehicle type as we are only training with these
-testCounter = 0;
-for thisAnyImage=1:numel(allTestImagesWithLabels)
-    currentLabel = allTestImagesWithLabels(thisAnyImage).labelledImage.label;
-    if (currentLabel == "ship" || currentLabel == "automobile" || currentLabel == "truck" || currentLabel == "airplane")
-        testCounter = testCounter+1;
-        vehicleTestImagesWithLabels(testCounter).labelledImage = allTestImagesWithLabels(thisAnyImage).labelledImage;
-    end
-end
+%------------------------------------------------------------------------%
+%clean up variables
+
+clear testImageIndex;
+clear trainImageIndex;
+clear trainCurrentIndex;
+clear indexPerTrain;
+clear rgbChannel;
+clear row;
+clear col;
+clear currentImage;
+clear imageLabel;
+clear rgbChannels;
+clear numberOfTestImages;
+clear trainBatch;
+clear testCurrentIndex;

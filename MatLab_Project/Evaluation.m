@@ -24,28 +24,65 @@ end
 % falseNeg = sum((predictions == 'automobile') & (actuals == 'airplane')|(predictions == 'ship') & (actuals == 'airplane')|(predictions == 'truck') & (actuals == 'airplane')|(predictions == 'airplane') & (actuals == 'automobile')|(predictions == 'ship') & (actuals == 'automobile')|(predictions == 'truck') & (actuals == 'automobile')|(predictions == 'airplane') & (actuals == 'ship')|(predictions == 'automobile') & (actuals == 'ship')|(predictions == 'truck') & (actuals == 'ship')|(predictions == 'airplane') & (actuals == 'truck')|(predictions == 'automobile') & (actuals == 'truck')|(predictions == 'ship') & (actuals == 'truck'));
 % trueNeg = numel(predictions) - (truePos + falsePos + falseNeg);
 
-precision = truePos / (truePos + falsePos);
-recall = truePos / (truePos + falseNeg);
-F1 = (2 * precision * recall) / (precision + recall);
+% precision = truePos / (truePos + falsePos);
+% recall = truePos / (truePos + falseNeg);
+% F1 = (2 * precision * recall) / (precision + recall);
 
 
 accuracy = (correctCount/numel(predictions)) * 100;
 falseSmallIdentificationRate = (falseLargeAsSmall/largeCount) * 100;
 
-scoreInfo = sprintf(strcat("Accuracy:\n", num2str(accuracy), "%%",  "\n\n", "False Small As Large Rate:\n", num2str(falseSmallIdentificationRate), "%%"));
+scoreInfo = sprintf(strcat("Confusion Chart of Vehicle Classification", "\n\n", "Accuracy: ", num2str(accuracy), "%%",  "\n", "False Small As Large Rate: ", num2str(falseSmallIdentificationRate), "%%"));
 
 %display classification results in confusion matrix
+figure('Name','Confusion Matrix');
+nexttile
 confusion = confusionchart(actuals, predictions);
 confusion.RowSummary = 'row-normalized';
 confusion.ColumnSummary = 'column-normalized';
-confusion.Title = 'Confusion Chart of Vehicle Classification';
+confusion.Title = scoreInfo;
+% title(scoreInfo);
 
-textBox = annotation('textbox');
-textBox.String = scoreInfo;
-textBox.BackgroundColor = '#C0D890';
-textBox.FontWeight = 'bold';
-textBox.FontUnits = 'normalized';
-textBox.FontSize = .03;
-textBox.Position = [.67, .33, 0, 0];
-textBox.FitBoxToText = 'on';
-%annotation('textbox', [.8, 0, .8, .5], 'String', scoreInfo,'FitBoxToText','on');
+% nexttile()
+% textBox = annotation('textbox');
+% textBox.String = scoreInfo;
+% textBox.BackgroundColor = '#C0D890';
+% textBox.FontWeight = 'bold';
+% textBox.FontUnits = 'normalized';
+% textBox.FontSize = .03;
+% textBox.Position = [.25, .3, 0, 0];
+% textBox.FitBoxToText = 'on';
+
+%display example HOG
+figure('Name','HOG Examples');
+nexttile
+randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
+randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
+imshow(randomImage.image);
+title("HOG Example of " + randomImage.label);
+hold on;
+plot(BagOfFeatures(randomIndex).hogVisualization);
+
+nexttile
+randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
+randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
+imshow(randomImage.image);
+title("HOG Example of " + randomImage.label);
+hold on;
+plot(BagOfFeatures(randomIndex).hogVisualization);
+
+nexttile
+randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
+randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
+imshow(randomImage.image);
+title("HOG Example of " + randomImage.label);
+hold on;
+plot(BagOfFeatures(randomIndex).hogVisualization);
+
+nexttile
+randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
+randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
+imshow(randomImage.image);
+title("HOG Example of " + randomImage.label);
+hold on;
+plot(BagOfFeatures(randomIndex).hogVisualization);

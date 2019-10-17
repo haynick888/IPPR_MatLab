@@ -21,8 +21,8 @@
 
 
 %---GLOBAL VARIABLES---%
-numberOfTrainImages = 500; %will be multiplied by number of training sets used. change this up to 10,000 depending on size of your test
-numberOfTestImages = 500; %change this up to 10,000 depending on size of your test
+numberOfTrainImages = 50; %will be multiplied by number of training sets used. change this up to 10,000 depending on size of your test
+numberOfTestImages = 50; %change this up to 10,000 depending on size of your test
 
 %--SELECT WHICH DETECTION METHODS WILL BE USED--%
 useMethods = ["numObjects", "hog", "eccentricity", "colours"]; %eccentricity and numObjects can NOT be used on their own. default is: ["numObjects", "hog", "eccentricity", "colours"]

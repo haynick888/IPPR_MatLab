@@ -32,7 +32,7 @@ end
 accuracy = (correctCount/numel(predictions)) * 100;
 falseSmallIdentificationRate = (falseLargeAsSmall/largeCount) * 100;
 
-scoreInfo = sprintf(strcat("Confusion Chart of Vehicle Classification", "\n\n", "Accuracy: ", num2str(accuracy), "%%",  "\n", "False Small As Large Rate: ", num2str(falseSmallIdentificationRate), "%%"));
+scoreInfo = sprintf(strcat("Confusion Chart of Vehicle Classification", "\n\n", "Accuracy: ", num2str(accuracy), "%%",  "\n", "False Large As Small Rate: ", num2str(falseSmallIdentificationRate), "%%"));
 
 %display classification results in confusion matrix
 figure('Name','Confusion Matrix');

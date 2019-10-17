@@ -19,9 +19,23 @@
 %=========================================================%
 %=========================================================%
 
-%training size
-numberOfTrainImages = 20; %WILL AUTOMATICALLY BE MULTIPLIED BY 5. change this up to 10,000 depending on size of your test
-numberOfTestImages = 10; %change this up to 10,000 depending on size of your test
+
+%---GLOBAL VARIABLES---%
+numberOfTrainImages = 500; %will be multiplied by number of training sets used. change this up to 10,000 depending on size of your test
+numberOfTestImages = 500; %change this up to 10,000 depending on size of your test
+
+%--SELECT WHICH DETECTION METHODS WILL BE USED--%
+useMethods = ["numObjects", "hog", "eccentricity", "colours"]; %eccentricity and numObjects can NOT be used on their own. default is: ["numObjects", "hog", "eccentricity", "colours"]
+
+%--SELECT WHICH IMAGE DATASETS WILL BE USED WHEN TRAINING--%
+useImageDataset = [1 2 3 4 5]; %default is: [1 2 3 4 5]
+
+
+%=========================================================%
+%=========================================================%
+
+
+%---SCRIPTS TO BE RUN---%
 
 %extract dataset from .tar.gz file
 Extract_Dataset
@@ -31,7 +45,7 @@ Load_Images
 
 %creates a bag of features for each vehicle training image using the HOG
 %feature detector
-HOG_Bag_Of_Features
+Bag_Of_Features %includes pre-processing and shape detection
 
 %script used for practicing and testing ideas
 %Practice_Range

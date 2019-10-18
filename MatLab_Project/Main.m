@@ -7,12 +7,12 @@
 %              \/_____/ \/_/    \/_/    \/_/\/ /          %
 
 %{
-                  Hayden Nicholls – 12966026
-                  Julia Manning - 12875795
-                  Joshua Lake - 12576930
-                  Harrison Jeffs - 12966370
-                  Patrichia Meleka – 12918835
-                  Varun Khushal - 13208297
+		  Hayden Nicholls – 12966026 - (Feature Detection, Bag of Features, and Bayes Classifier)
+		  Julia Manning - 12875795 - (Bayes Classifier and Bayes Cost)
+		  Joshua Lake - 12576930 - (Image Pre-Processing and Number of Objects)
+		  Harrison Jeffs - 12966370 - (Evaluation - Confusion Matrix)
+		  Patrichia Meleka – 12918835 - (Evaluation - Scores)
+		  Varun Khushal - 13208297 - (Image Pre-Processing and Number of Objects)
 %}
 
 
@@ -21,14 +21,14 @@
 
 
 %---GLOBAL VARIABLES---%
-numberOfTrainImages = 2000; %will be multiplied by number of training sets used. change this up to 10,000 depending on size of your test
-numberOfTestImages = 2000; %change this up to 10,000 depending on size of your test
+numberOfTrainImages = 2000; %recommended 2000. must be at least 50. will be multiplied by number of training sets used. change this up to 10,000 depending on size of your test
+numberOfTestImages = 2000; %recommended 2000. must be at least 1. change this up to 10,000 depending on size of your test
 
 %--SELECT WHICH DETECTION METHODS WILL BE USED--%
 useMethods = ["numObjects", "hog", "eccentricity", "colours"]; %eccentricity and numObjects can NOT be used on their own. default is: ["numObjects", "hog", "eccentricity", "colours"]
 
 %--SELECT WHICH IMAGE DATASETS WILL BE USED WHEN TRAINING--%
-useImageDataset = [1 2 3 4 5]; %default is: [1 2 3 4 5]
+useImageDataset = [1 2 3 4 5]; %must include at least 2 datasets. default and maximum is: [1 2 3 4 5]
 
 
 %=========================================================%

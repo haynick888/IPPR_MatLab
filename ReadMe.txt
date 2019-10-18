@@ -2,8 +2,11 @@ Open MATLAB with the folder MatLab_Project as your root directory.
 
 You can edit the global variables at the top of the Main.m file:
 	numberOfTrainImages is the number of images that will be loaded from each dataset for classifier training.
+	Minimum of 50, Maximum of 10,000
 
 	numberOfTestImages is the number of images that will be loaded for testing the classifier.
+	Minimum of 1
+	Maximum of 10,000
 
 	useMethods is an array of the feature detection methods that will be used and loaded into the bag of features.
 		numObjects counts the number of objects detected in a highly eroded image.
@@ -13,6 +16,7 @@ You can edit the global variables at the top of the Main.m file:
 	NOTE: You can NOT use eccentricity or numObjects on their own.
 
 	useImageDataset lists the datasets that will be used when training the classifier. There are 5 datasets, each labelled 1 through to 5.
+	Minimum of 2 Datasets Selected. Maximum of 5 Datasets Selected [1 2 3 4 5]
 	NOTE: Total training images used = numberOfTrainImages * number of datatsets used
 
 
@@ -20,10 +24,13 @@ To run the program, execute Main.m in MATLAB.
 Once this has finished processing, you will be presented with 2 windows.
 Figure 1: Confusion Matrix. This displays the confusion matrix and scores of the classifier.
 Figure 2: HOG Examples. This presents 4 random examples of HOG features detected on 4 images that were used for training.
+NOTE: Figure 2 will only appear if you incluyded "hog" in the useMethods global variables.
 
 
+To ensure that the system runs as expetced, you must use Matlab version R2019b or later.
+You may also need to install Image Processing Toolbox and Computer Vision Toolbox if you don't have them already.
+Full details of the MatLab version the system was developed and tested on is below:
 
-USING MATLAB VERSION AND TOOLBOXES:
 
 MATLAB Version: 9.7.0.1190202 (R2019b)
 MATLAB License Number: 1078445

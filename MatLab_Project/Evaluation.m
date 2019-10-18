@@ -53,36 +53,38 @@ confusion.Title = scoreInfo;
 % textBox.Position = [.25, .3, 0, 0];
 % textBox.FitBoxToText = 'on';
 
-%display example HOG
-figure('Name','HOG Examples');
-nexttile
-randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
-randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
-imshow(randomImage.image);
-title("HOG Example of " + randomImage.label);
-hold on;
-plot(BagOfFeatures(randomIndex).hogVisualization);
+if (ismember("hog",useMethods))
+    %display example HOG
+    figure('Name','HOG Examples');
+    nexttile
+    randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
+    randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
+    imshow(randomImage.image);
+    title("HOG Example of " + randomImage.label);
+    hold on;
+    plot(BagOfFeatures(randomIndex).hogVisualization);
 
-nexttile
-randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
-randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
-imshow(randomImage.image);
-title("HOG Example of " + randomImage.label);
-hold on;
-plot(BagOfFeatures(randomIndex).hogVisualization);
+    nexttile
+    randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
+    randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
+    imshow(randomImage.image);
+    title("HOG Example of " + randomImage.label);
+    hold on;
+    plot(BagOfFeatures(randomIndex).hogVisualization);
 
-nexttile
-randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
-randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
-imshow(randomImage.image);
-title("HOG Example of " + randomImage.label);
-hold on;
-plot(BagOfFeatures(randomIndex).hogVisualization);
+    nexttile
+    randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
+    randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
+    imshow(randomImage.image);
+    title("HOG Example of " + randomImage.label);
+    hold on;
+    plot(BagOfFeatures(randomIndex).hogVisualization);
 
-nexttile
-randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
-randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
-imshow(randomImage.image);
-title("HOG Example of " + randomImage.label);
-hold on;
-plot(BagOfFeatures(randomIndex).hogVisualization);
+    nexttile
+    randomIndex = randi([1, numel(allTestImagesWithLabels)],1);
+    randomImage = allTestImagesWithLabels(randomIndex).labelledImage;
+    imshow(randomImage.image);
+    title("HOG Example of " + randomImage.label);
+    hold on;
+    plot(BagOfFeatures(randomIndex).hogVisualization);
+end
